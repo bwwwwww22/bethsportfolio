@@ -33,7 +33,7 @@ The modeled **Pressurized Crew Pod System (PCPS)** monitors and regulates cabin 
 
 ---
 
-## Operational Context (OAB / OES)
+## Operational Context (OES)
 At the operational level, the environment is captured as interacting actors and external systems:
 
 - **Crew:** selects pressure mode, provides setpoints, can manually override
@@ -67,9 +67,8 @@ The **System Analysis Boundary** defines PCPS as the system of interest and make
 - Flow requests to ECLSS (make‑up air)
 - Alerts, telemetry, and emergency actions (isolate/safe/vent)
 
-> **Image placeholder — SAB (System Architecture Blank)**
->
-> _Add image here_
+### SAB (Structure)
+![SAB — Structure]({{ site.baseurl }}/assets/images/%5BSAB%5D%20Structure.png)
 
 ---
 
@@ -87,10 +86,6 @@ The functional architecture models a closed‑loop control system:
 
 Emergency behavior is explicit: **detect leak/over‑pressure → emergency protection (isolate/safe/vent/alarms) → emergency event packet** for telemetry.
 
-> **Image placeholder — SDFB (System Data Flow / Functional Breakdown)**
->
-> _Add image here_
-
 ---
 
 ## Functional Chains (end‑to‑end coverage)
@@ -100,9 +95,8 @@ Key functional chains were highlighted to validate scenario coverage and interfa
 - **Over‑pressure Response:** detect over‑pressure → emergency protection → vent path actuation → alert/telemetry  
 - **Leak/Disturbance Response:** disturbance/leak input → detection → protective action (isolate/load relief) → reporting  
 
-> **Image placeholder — Functional Chains view (highlighted chains on SDFB)**
->
-> _Add image here_
+### SDFB (Root System Function)
+![SDFB — Root System Function]({{ site.baseurl }}/assets/images/%5BSDFB%5D%20Root%20System%20Function.png)
 
 ---
 
@@ -116,9 +110,8 @@ Functions were allocated into a logical decomposition that separates sensing, co
 
 This structure supports traceability from functions to logical components and provides a clean foundation for later physical allocation (HW/SW, redundancy, etc.).
 
-> **Image placeholder — LAB (Logical Architecture Blank)**
->
-> _Add image here_
+### LAB (Structure)
+![LAB — Structure]({{ site.baseurl }}/assets/images/%5BLAB%5D%20Structure.png)
 
 ---
 
