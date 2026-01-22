@@ -1,140 +1,255 @@
 ---
-title: "Capella MBSE Mini‑Project — Pressure Control System (PCPS)"
+title: "Capella MBSE Mini-Project — Pressurized Crew Pod System (PCPS)"
 excerpt_separator: "<!--more-->"
 categories:
   - Portfolio
   - MBSE
+  - Systems Engineering
 tags:
   - Capella
   - Arcadia
-  - Systems Engineering
   - Spacecraft Systems
   - ECLSS
+  - Model-Based Systems Engineering
 ---
 
 ## Overview
-A MBSE project built in **Capella (Arcadia)** to demonstrate **end‑to‑end traceability** from stakeholder need → operational interactions → functional behavior → logical architecture.
+An MBSE mini-project built in **Capella (Arcadia method)** to demonstrate **end-to-end traceability** from operational need → system behavior → logical architecture.
 
-The modeled **Pressurized Crew Pod System (PCPS)** monitors and regulates cabin pressure across **nominal, degraded, and emergency** conditions while interfacing with **avionics, ECLSS, power, structure, ground support**, and the **external atmosphere**.
+The modeled **Pressurized Crew Pod System (PCPS)** monitors and regulates cabin pressure across **nominal, degraded, and emergency** conditions while interfacing with **Crew, Avionics, ECLSS, Power, Structure/Pressure Vessel, Ground Support**, and the **External Atmosphere**.
+
+The focus is on **behavioral correctness, interface clarity, and functional allocation**, rather than detailed physical design.
 
 <!--more-->
 
 ---
 
-### 1. Goal & Scope
-**Goal:** Model a spacecraft cabin pressure control system with clear traceability from **operational need → system behavior → logical/physical architecture**.
+## 1. Goal & Scope
+
+**Goal:**  
+Demonstrate structured progression through the Arcadia layers:
+**Operational Analysis → System Analysis → Logical Architecture**, maintaining traceability between stakeholder intent, system functions, and logical components.
 
 **Scope (PCPS responsibilities):**
-- Monitor cabin pressure and detect abnormal conditions
-- Regulate pressure via **inflow valves** and **vent path**
+- Monitor cabin and ambient pressure
+- Detect abnormal conditions (leak, over-pressure, sensor/power faults)
+- Regulate pressure using inflow valves and vent path
 - Support **Auto / Manual / Emergency** modes
-- Exchange commands/telemetry with avionics and ground systems
-- Request make‑up air from ECLSS and report power/health status
+- Exchange commands and telemetry with Avionics and Ground Support
+- Request make-up air from ECLSS
+- Interface with Power and Structure for health and integrity reporting
 
 ---
 
-## 2. Operational Analysis
-At the operational level, the environment is captured as interacting actors and external systems:
-- **Crew:** selects pressure mode, provides setpoints, can manually override
-- **Avionics:** hosts monitoring/state control functions and routes commands/telemetry
-- **ECLSS:** provides make‑up air and responds to flow requests
-- **Power System:** provides electrical power and receives health/power usage reporting
-- **Structure/Pressure Vessel:** contains cabin pressure and supports leak reporting
-- **External Atmosphere:** ambient pressure reference + disturbances (e.g., leakage flow)
-- **Ground Support Equipment:** preflight/service commands
+## 2. Operational Analysis (OA)
 
-**Primary operational exchanges:** pressure data and alerts, mode commands, flow requests, electrical power, and telemetry.
+This layer describes the **mission environment and stakeholder behavior**, without assuming any system implementation. The focus is on **who does what**, not how it is built.
 
-### 2a. OAB (Operational Architecture Blank)
-![OAB - ]({{ site.baseurl }}/assets/images/%5BOAB%5D%20Operational%20Entities.png)
-
-### 2b. OAIB (Operational Activity Interaction Diagram)
-The OAIB captures the operational environment decomposition, showing how the PCPS sits within the broader spacecraft operational context. This view is useful for communicating scope and ownership: what is part of the PCPS operational environment versus what remains external actors/systems.
-![OAIB - ]({{ site.baseurl }}/assets/images/%5BOES%5D%20Root%20Operaetion%20activity.png)
-
-### 2c. OCB (Operational Capability Diagram)
-![OCB - ]({{ site.baseurl }}/assets/images/%5BOES%5D%20Operational%20Safe%20Capabilities.png)
-
-### 2d. OEBD (Operational Entity Breakdown Diagram)
-![OEBD - ]({{ site.baseurl }}/assets/images/%5BOES%5D%20Operational%20Safe%20Entities.png)
-
-### 2e. OES (Operational Entity Scenario)
-![OES - ]({{ site.baseurl }}/assets/images/%5BOES%5D%20Maintain%20Safe%20Cabin%20Pressure.png)
+### Operational Actors
+- **Crew:** monitors pressure, provides setpoints, issues manual override
+- **Avionics:** routes telemetry and commands, provides vehicle/mission state
+- **ECLSS:** provides make-up air and responds to flow requests
+- **Power System:** supplies electrical power and reports power health
+- **Structure / Pressure Vessel:** contains cabin atmosphere and reports leak/integrity signals
+- **External Atmosphere:** provides ambient pressure reference and leakage disturbances
+- **Ground Support Equipment:** provides preflight and servicing commands
 
 ---
 
-## 3. System Analysis
+### 2a. OAB — Operational Architecture Blank
+![OAB]({{ site.baseurl }}/assets/images/%5BOAB%5D%20Operational%20Entities.png)
 
-### 3a. CSA — Contextual System Actors**
-The CSA provides a quick “at-a-glance” view of the PCPS system-of-interest and the external systems it depends on. It helps frame the integration problem by showing the main interacting neighbors—Avionics, Cabin Environment, Structure/Pressure Vessel, ECLSS, Power System, and Crew—before diving into detailed exchanges and functions.
-![CSA - ]({{ site.baseurl }}/assets/images/%5BOAB%5D%20Operational%20Entities.png)
+**What it shows:**  
+A high-level map of the **operational entities** involved in maintaining safe cabin pressure and how they conceptually relate to the PCPS mission.
 
-### 3b. SAB (System Architecture Diagram)
-The **SAB** defines PCPS as the system of interest and makes interfaces explicit.
-
-**Inputs:**
-- Cabin/ambient pressure signals (raw + validated)
-- Setpoint/mode commands (crew/ground/avionics)
-- Structural/leak indications and disturbance inputs
-
-**Outputs:**
-- Valve position commands (inflow control)
-- Flow requests to ECLSS (make‑up air)
-- Alerts, telemetry, and emergency actions (isolate/safe/vent)
-
-![SAB - ]({{ site.baseurl }}/assets/images/%5BSAB%5D%20Structure.png)
-
-### 3c. Functional Dataflow — How pressure is controlled
-The functional architecture models a closed‑loop control system:
-
-1. **Acquire Cabin & Ambient Pressure**
-2. **Filter & Validate Sensor Data** → calibrated pressure signals
-3. **Compute Pressure Error** vs target setpoint
-4. **Determine Control Mode** (Auto / Manual / Emergency)
-5. **Generate Control Command (Valve Position)**
-6. **Regulate Air Inflow** (actuate valves + request make‑up air from ECLSS)
-7. **Vent Excess Pressure** on over‑pressure conditions
-8. **Generate Telemetry/Status** + log power/sensor health
-
-Emergency behavior is explicit: **detect leak/over‑pressure → emergency protection (isolate/safe/vent/alarms) → emergency event packet** for telemetry.
-
-### 3d. Functional Chains (end‑to‑end coverage)
-Key functional chains were highlighted to validate scenario coverage and interface completeness:
-
-- **Nominal Pressure Regulation:** sense → validate → compute error → mode logic → command valves → regulate airflow → stabilize cabin pressure  
-- **Over‑pressure Response:** detect over‑pressure → emergency protection → vent path actuation → alert/telemetry  
-- **Leak/Disturbance Response:** disturbance/leak input → detection → protective action (isolate/load relief) → reporting  
-
-### SDFB (System Functional Dataflow diagram)
-![SDFB - ]({{ site.baseurl }}/assets/images/%5BSDFB%5D%20Root%20System%20Function.png)
+**Why it exists:**  
+This diagram defines **system scope and ownership**. It answers:  
+> What is part of the operational environment, and what is external to the system of interest?
 
 ---
 
-## 4. Logical Architecture
-### 4a. LAB (Logical Architecture Diagram)
-Functions were allocated into a logical decomposition that separates sensing, control, and actuation:
-- **Pressure Sensor Unit:** cabin/ambient acquisition + filtering/validation  
-- **Control Logic Unit:** setpoint tracking, error computation, mode management, command generation  
-- **Valve Actuation Unit:** inflow regulation + vent actuation  
-- **Power Interface / Conditioning (modeled):** power interface + health/power usage logging  
+### 2b. OAIB — Operational Activity Interaction Diagram
+![OAIB]({{ site.baseurl }}/assets/images/%5BOES%5D%20Root%20Operaetion%20activity.png)
 
-This structure supports traceability from functions to logical components and provides a clean foundation for later physical allocation (HW/SW, redundancy, etc.).
+**What it shows:**  
+The **operational activities** performed by entities (e.g., monitoring, commanding, supplying air, reporting leaks) and the **interactions between those activities**.
 
-![LAB - ]({{ site.baseurl }}/assets/images/%5BLAB%5D%20Structure.png)
-
-### 4b. LCBD (Logical Component Breakdown Diagram)
-The LCBD decomposes the Logical System into major logical building blocks:
-- Pressure Sensor Unit
-- Control Logic Unit
-- Valve Actuation Unit
-- Power Conditioning Unit
-
-![LCBD - ]({{ site.baseurl }}/assets/images/%5BLAB%5D%20Structure.png)
+**Why it exists:**  
+This view captures **behavioral collaboration** between stakeholders and systems before any system design is assumed. It is the basis for deriving system functions.
 
 ---
 
-## 5. What this project demonstrates
-- Correct **Arcadia/Capella layering** from operational context to logical design  
-- Explicit **system boundary and interfaces** (crew/avionics/ECLSS/power/structure/ground)  
-- Closed‑loop pressure control with **mode logic** and **emergency protection**  
-- Use of **functional chains** and **sequence scenarios** to validate end‑to‑end behavior and traceability  
+### 2c. OCB — Operational Capability Diagram
+![OCB]({{ site.baseurl }}/assets/images/%5BOES%5D%20Operational%20Safe%20Capabilities.png)
+
+**What it shows:**  
+The set of **operational capabilities** required to achieve the mission goal, such as:
+- Maintain safe cabin pressure
+- Respond to leaks and over-pressure
+- Support crew control and ground servicing
+
+**Why it exists:**  
+This diagram links **stakeholder needs to operational behavior** and provides justification for why system functions must exist later in the model.
+
+---
+
+### 2d. OEBD — Operational Entity Breakdown Diagram
+![OEBD]({{ site.baseurl }}/assets/images/%5BOES%5D%20Operational%20Safe%20Entities.png)
+
+**What it shows:**  
+A structured **decomposition of operational entities** into their major elements (e.g., spacecraft subsystems and human operators).
+
+**Why it exists:**  
+This clarifies **responsibility boundaries** and supports allocation of operational activities to the correct actors.
+
+---
+
+### 2e. OES — Operational Entity Scenario
+![OES]({{ site.baseurl }}/assets/images/%5BOES%5D%20Maintain%20Safe%20Cabin%20Pressure.png)
+
+**What it shows:**  
+A **time-ordered scenario** for maintaining safe cabin pressure, including sensing, commanding, air supply, and response to disturbances.
+
+**Why it exists:**  
+This validates that the defined entities and activities can collectively achieve the mission under realistic conditions.
+
+---
+
+## 3. System Analysis (SA)
+
+This layer defines the **system of interest (PCPS)**, its **functions**, and its **formal interfaces** with external actors.
+
+---
+
+### 3a. CSA — Contextual System Actors
+![CSA]({{ site.baseurl }}/assets/images/%5BCSA%5D%20Structure.png)
+
+**What it shows:**  
+The **PCPS system boundary** and the external **actors** that interact with it (Crew, Avionics, ECLSS, Power, Structure, Ground, Environment).
+
+**Why it exists:**  
+This is the **integration framing diagram**. It establishes:
+- What is inside the system of interest
+- What remains external
+- Where interfaces must exist
+
+---
+
+### 3b. SAB — System Architecture Blank
+![SAB]({{ site.baseurl }}/assets/images/%5BSAB%5D%20Structure.png)
+
+**What it shows:**  
+The **allocation of system functions** to either:
+- The **PCPS system**, or
+- External **actors** (e.g., Crew, Avionics, ECLSS)
+
+Functions are connected by **functional exchanges** representing formal data, command, or physical flows.
+
+**Why it exists:**  
+This diagram transforms operational behavior into **engineering requirements**. Every arrow implies an interface that must be implemented, tested, and verified.
+
+---
+
+### 3c. System Functional Behavior — Closed-Loop Control
+The PCPS is modeled as a **closed-loop pressure control system**:
+
+1. **Acquire Cabin & Ambient Pressure**  
+2. **Filter & Validate Sensor Data**  
+3. **Compute Pressure Error** (vs. setpoint)  
+4. **Determine Control Mode** (Auto / Manual / Emergency)  
+5. **Generate Control Command (Valve Position)**  
+6. **Regulate Air Inflow** (valves + ECLSS make-up air request)  
+7. **Vent Excess Pressure** (over-pressure path)  
+8. **Generate Telemetry / Log Health**
+
+**Emergency path:**  
+Detect leak or over-pressure → Execute emergency protection (isolate, safe vent, alarms) → Generate telemetry and alerts.
+
+---
+
+### 3d. SDFB — System Functional Dataflow Diagram
+![SDFB]({{ site.baseurl }}/assets/images/%5BSDFB%5D%20Root%20System%20Function.png)
+
+**What it shows:**  
+The **data and control flows** between system functions, including sensor signals, control logic, command generation, actuation, and telemetry feedback.
+
+**Why it exists:**  
+This validates **functional completeness and correctness**. It ensures no function is disconnected and that every control path has a clear source and sink.
+
+---
+
+### 3e. Functional Chains — End-to-End Scenarios
+
+**Nominal Regulation Chain:**  
+Sense → Validate → Compute Error → Mode Logic → Command Valves → Regulate Airflow → Stabilize Cabin Pressure
+
+**Over-Pressure Chain:**  
+Detect Over-Pressure → Emergency Protection → Vent Path Actuation → Telemetry / Alerts
+
+**Leak / Disturbance Chain:**  
+Disturbance Input → Detection → Isolation / Load Relief → Reporting
+
+**Why these exist:**  
+Functional chains prove that the system architecture supports **real mission scenarios**, not just isolated functions.
+
+---
+
+## 4. Logical Architecture (LA)
+
+This layer introduces **logical components** and allocates the **existing system functions** to them. No new behavior is created here—only **structural realization of functions**.
+
+---
+
+### 4a. LAB — Logical Architecture Blank
+![LAB]({{ site.baseurl }}/assets/images/%5BLAB%5D%20Structure.png)
+
+**What it shows:**  
+A decomposition of the PCPS into major **logical components** with system functions allocated to each.
+
+**Logical Components:**
+- **Pressure Sensor Unit**  
+  - Acquire Cabin Pressure  
+  - Acquire Ambient Pressure  
+  - Filter & Validate Sensor Data  
+- **Control Logic Unit**  
+  - Compute Pressure Error  
+  - Determine Control Mode  
+  - Generate Control Command  
+  - Detect Leak or Over-Pressure  
+  - Execute Emergency Protection  
+- **Valve Actuation Unit**  
+  - Regulate Air Inflow  
+  - Vent Excess Pressure  
+- **Power / Interface Unit**  
+  - Power Interface  
+  - Log Power / Sensor Health  
+  - Report Power Health  
+
+**Why it exists:**  
+This diagram bridges **functional behavior and physical design**. It defines where functions “live” logically before hardware/software decisions are made.
+
+---
+
+### 4b. LCBD — Logical Component Breakdown Diagram
+![LCBD]({{ site.baseurl }}/assets/images/%5BLCBD%5D%20Structure.png)
+
+**What it shows:**  
+A hierarchical **breakdown of logical components** forming the PCPS.
+
+**Why it exists:**  
+This provides a clean structure for:
+- Future hardware/software partitioning
+- Redundancy modeling
+- Physical architecture and interface design
+
+---
+
+## 5. What This Project Demonstrates
+
+- Correct application of **Arcadia layering**
+- Clear **system boundary and interface definition**
+- Closed-loop control modeling with **mode logic and emergency behavior**
+- Traceability from **operational need → system function → logical component**
+- Use of **functional chains and scenarios** to validate architecture completeness
+
+---
