@@ -115,21 +115,6 @@ This structure supports traceability from functions to logical components and pr
 
 ---
 
-## Scenario Walkthrough (Sequence Diagram)
-A representative interaction scenario validates timing and ownership across lifelines:
-
-- Sense cabin pressure → monitoring processor → state controller
-- Crew provides **Command Pressure Mode**
-- State controller issues control commands
-- PCPS regulates cabin atmosphere
-- ECLSS exchanges air based on flow request
-- Power system provides electrical power throughout
-
-> **Image placeholder — Sequence Diagram (scenario walkthrough)**
->
-> _Add image here_
-
----
 
 ## What this project demonstrates
 - Correct **Arcadia/Capella layering** from operational context to logical design  
