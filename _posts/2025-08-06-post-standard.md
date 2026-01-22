@@ -33,17 +33,8 @@ The modeled **Pressurized Crew Pod System (PCPS)** monitors and regulates cabin 
 
 ---
 
-**CSA — Context/System/Subsystem Architecture**
-The CSA provides a quick “at-a-glance” view of the PCPS system-of-interest and the external systems it depends on. It helps frame the integration problem by showing the main interacting neighbors—Avionics, Cabin Environment, Structure/Pressure Vessel, ECLSS, Power System, and Crew—before diving into detailed exchanges and functions.
-
-### CSA
-![CSA - ]({{ site.baseurl }}/assets/images/%5BOAB%5D%20Operational%20Entities.png)
-
----
-
-## Operational Context (OES)
+## Operational Analysis
 At the operational level, the environment is captured as interacting actors and external systems:
-
 - **Crew:** selects pressure mode, provides setpoints, can manually override
 - **Avionics:** hosts monitoring/state control functions and routes commands/telemetry
 - **ECLSS:** provides make‑up air and responds to flow requests
@@ -54,16 +45,24 @@ At the operational level, the environment is captured as interacting actors and 
 
 **Primary operational exchanges:** pressure data and alerts, mode commands, flow requests, electrical power, and telemetry.
 
-### OAB (Operational Architecture Blank)
+**OAB (Operational Architecture Blank)**
 ![OAB - ]({{ site.baseurl }}/assets/images/%5BOAB%5D%20Operational%20Entities.png)
 
-### OES (Operational Exchange Scenario)
+**OES (Operational Entity Scenario)**
 ![OES - ]({{ site.baseurl }}/assets/images/%5BOES%5D%20Maintain%20Safe%20Cabin%20Pressure.png)
 
 ---
 
-## System Boundary & Interfaces (SAB)
-The **System Analysis Boundary** defines PCPS as the system of interest and makes interfaces explicit.
+##System Analysis
+
+###CSA — Contextual System Actors**
+The CSA provides a quick “at-a-glance” view of the PCPS system-of-interest and the external systems it depends on. It helps frame the integration problem by showing the main interacting neighbors—Avionics, Cabin Environment, Structure/Pressure Vessel, ECLSS, Power System, and Crew—before diving into detailed exchanges and functions.
+![CSA - ]({{ site.baseurl }}/assets/images/%5BOAB%5D%20Operational%20Entities.png)
+
+---
+
+### SAB (System Architecture Diagram)
+The **SAB** defines PCPS as the system of interest and makes interfaces explicit.
 
 **Inputs:**
 - Cabin/ambient pressure signals (raw + validated)
@@ -75,12 +74,11 @@ The **System Analysis Boundary** defines PCPS as the system of interest and make
 - Flow requests to ECLSS (make‑up air)
 - Alerts, telemetry, and emergency actions (isolate/safe/vent)
 
-### SAB (Structure)
 ![SAB - ]({{ site.baseurl }}/assets/images/%5BSAB%5D%20Structure.png)
 
 ---
 
-## Functional Behavior (SDFB) — How pressure is controlled
+### Functional Dataflow — How pressure is controlled
 The functional architecture models a closed‑loop control system:
 
 1. **Acquire Cabin & Ambient Pressure**
@@ -94,23 +92,20 @@ The functional architecture models a closed‑loop control system:
 
 Emergency behavior is explicit: **detect leak/over‑pressure → emergency protection (isolate/safe/vent/alarms) → emergency event packet** for telemetry.
 
----
-
-## Functional Chains (end‑to‑end coverage)
+### Functional Chains (end‑to‑end coverage)
 Key functional chains were highlighted to validate scenario coverage and interface completeness:
 
 - **Nominal Pressure Regulation:** sense → validate → compute error → mode logic → command valves → regulate airflow → stabilize cabin pressure  
 - **Over‑pressure Response:** detect over‑pressure → emergency protection → vent path actuation → alert/telemetry  
 - **Leak/Disturbance Response:** disturbance/leak input → detection → protective action (isolate/load relief) → reporting  
 
-### SDFB (Root System Function)
+### SDFB (System Functional Dataflow diagram)
 ![SDFB - ]({{ site.baseurl }}/assets/images/%5BSDFB%5D%20Root%20System%20Function.png)
 
 ---
 
-## Logical Architecture (LAB)
+## Logical Architecture
 Functions were allocated into a logical decomposition that separates sensing, control, and actuation:
-
 - **Pressure Sensor Unit:** cabin/ambient acquisition + filtering/validation  
 - **Control Logic Unit:** setpoint tracking, error computation, mode management, command generation  
 - **Valve Actuation Unit:** inflow regulation + vent actuation  
@@ -118,11 +113,10 @@ Functions were allocated into a logical decomposition that separates sensing, co
 
 This structure supports traceability from functions to logical components and provides a clean foundation for later physical allocation (HW/SW, redundancy, etc.).
 
-### LAB (Structure)
+### LAB (Logical Architecture Diagram)
 ![LAB - ]({{ site.baseurl }}/assets/images/%5BLAB%5D%20Structure.png)
 
 ---
-
 
 ## What this project demonstrates
 - Correct **Arcadia/Capella layering** from operational context to logical design  
