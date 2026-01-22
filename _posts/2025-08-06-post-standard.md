@@ -47,10 +47,10 @@ At the operational level, the environment is captured as interacting actors and 
 **Primary operational exchanges:** pressure data and alerts, mode commands, flow requests, electrical power, and telemetry.
 
 ### OAB (Operational Architecture Blank)
-![OAB]({{ site.baseurl }}/assets/images/%5BOAB%5D%20Operational%20Entities.png)
+![OAB - ]({{ site.baseurl }}/assets/images/%5BOAB%5D%20Operational%20Entities.png)
 
 ### OES (Operational Exchange Scenario)
-![OES]({{ site.baseurl }}/assets/images/%5BOES%5D%20Maintain%20Safe%20Cabin%20Pressure.png)
+![OES - ]({{ site.baseurl }}/assets/images/%5BOES%5D%20Maintain%20Safe%20Cabin%20Pressure.png)
 
 ---
 
@@ -68,7 +68,7 @@ The **System Analysis Boundary** defines PCPS as the system of interest and make
 - Alerts, telemetry, and emergency actions (isolate/safe/vent)
 
 ### SAB (Structure)
-![SAB]({{ site.baseurl }}/assets/images/%5BSAB%5D%20Structure.png)
+![SAB - ]({{ site.baseurl }}/assets/images/%5BSAB%5D%20Structure.png)
 
 ---
 
@@ -96,7 +96,7 @@ Key functional chains were highlighted to validate scenario coverage and interfa
 - **Leak/Disturbance Response:** disturbance/leak input → detection → protective action (isolate/load relief) → reporting  
 
 ### SDFB (Root System Function)
-![SDFB]({{ site.baseurl }}/assets/images/%5BSDFB%5D%20Root%20System%20Function.png)
+![SDFB - ]({{ site.baseurl }}/assets/images/%5BSDFB%5D%20Root%20System%20Function.png)
 
 ---
 
@@ -111,7 +111,7 @@ Functions were allocated into a logical decomposition that separates sensing, co
 This structure supports traceability from functions to logical components and provides a clean foundation for later physical allocation (HW/SW, redundancy, etc.).
 
 ### LAB (Structure)
-![LAB]({{ site.baseurl }}/assets/images/%5BLAB%5D%20Structure.png)
+![LAB - ]({{ site.baseurl }}/assets/images/%5BLAB%5D%20Structure.png)
 
 ---
 
