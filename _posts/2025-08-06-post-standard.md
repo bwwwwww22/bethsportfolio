@@ -33,6 +33,14 @@ The modeled **Pressurized Crew Pod System (PCPS)** monitors and regulates cabin 
 
 ---
 
+**CSA — Context/System/Subsystem Architecture**
+The CSA provides a quick “at-a-glance” view of the PCPS system-of-interest and the external systems it depends on. It helps frame the integration problem by showing the main interacting neighbors—Avionics, Cabin Environment, Structure/Pressure Vessel, ECLSS, Power System, and Crew—before diving into detailed exchanges and functions.
+
+### CSA
+![CSA - ]({{ site.baseurl }}/assets/images/%5BOAB%5D%20Operational%20Entities.png)
+
+---
+
 ## Operational Context (OES)
 At the operational level, the environment is captured as interacting actors and external systems:
 
