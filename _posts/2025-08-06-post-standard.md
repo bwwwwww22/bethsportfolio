@@ -48,11 +48,11 @@ At the operational level, the environment is captured as interacting actors and 
 
 > **Image placeholder — OAB (Operational Architecture Blank / Context)**
 >
-> _Add image here_
+> assets/images/[OAB] Operational Entities.png
 
 > **Image placeholder — OES (Operational Exchange Scenario)**
 >
-> _Add image here_
+> assets/images/[OES] Maintain Safe Cabin Pressure.png
 
 ---
 
