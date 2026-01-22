@@ -46,13 +46,11 @@ At the operational level, the environment is captured as interacting actors and 
 
 **Primary operational exchanges:** pressure data and alerts, mode commands, flow requests, electrical power, and telemetry.
 
-> **Image placeholder — OAB (Operational Architecture Blank / Context)**
->
-> ![OAB — Operational Architecture Blank / Context](/assets/images/%5BOAB%5D%20Operational%20Entities.png)
+> OAB (Operational Architecture Blank / Context)**
+![OAB — Operational Architecture Blank / Context](/assets/images/%5BOAB%5D%20Operational%20Entities.png)
 
-> **Image placeholder — OES (Operational Exchange Scenario)**
->
-> ![OES — Operational Exchange Scenario](/assets/images/%5BOES%5D%20Maintain%20Safe%20Cabin%20Pressure.png)
+> OES (Operational Exchange Scenario)**
+![OES — Operational Exchange Scenario](/assets/images/%5BOES%5D%20Maintain%20Safe%20Cabin%20Pressure.png)
 
 ---
 
