@@ -21,7 +21,7 @@ The modeled **Pressurized Crew Pod System (PCPS)** monitors and regulates cabin 
 
 ---
 
-## Goal & Scope
+### 1. Goal & Scope
 **Goal:** Model a spacecraft cabin pressure control system with clear traceability from **operational need → system behavior → logical/physical architecture**.
 
 **Scope (PCPS responsibilities):**
@@ -33,7 +33,7 @@ The modeled **Pressurized Crew Pod System (PCPS)** monitors and regulates cabin 
 
 ---
 
-## Operational Analysis
+## 2. Operational Analysis
 At the operational level, the environment is captured as interacting actors and external systems:
 - **Crew:** selects pressure mode, provides setpoints, can manually override
 - **Avionics:** hosts monitoring/state control functions and routes commands/telemetry
@@ -45,23 +45,31 @@ At the operational level, the environment is captured as interacting actors and 
 
 **Primary operational exchanges:** pressure data and alerts, mode commands, flow requests, electrical power, and telemetry.
 
-**OAB (Operational Architecture Blank)**
+### 2a. OAB (Operational Architecture Blank)
 ![OAB - ]({{ site.baseurl }}/assets/images/%5BOAB%5D%20Operational%20Entities.png)
 
-**OES (Operational Entity Scenario)**
+### 2b. OAIB (Operational Activity Interaction Diagram)
+The OAIB captures the operational environment decomposition, showing how the PCPS sits within the broader spacecraft operational context. This view is useful for communicating scope and ownership: what is part of the PCPS operational environment versus what remains external actors/systems.
+![OAIB - ]({{ site.baseurl }}/assets/images/%5BOES%5D%20Root%20Operaetion%20activity.png)
+
+### 2c. OCB (Operational Capability Diagram)
+![OCB - ]({{ site.baseurl }}/assets/images/%5BOES%5D%20Operational%20Safe%20Capabilities.png)
+
+### 2d. OEBD (Operational Entity Breakdown Diagram)
+![OEBD - ]({{ site.baseurl }}/assets/images/%5BOES%5D%20Operational%20Safe%20Entities.png)
+
+### 2e. OES (Operational Entity Scenario)
 ![OES - ]({{ site.baseurl }}/assets/images/%5BOES%5D%20Maintain%20Safe%20Cabin%20Pressure.png)
 
 ---
 
-##System Analysis
+## 3. System Analysis
 
-###CSA — Contextual System Actors**
+### 3a. CSA — Contextual System Actors**
 The CSA provides a quick “at-a-glance” view of the PCPS system-of-interest and the external systems it depends on. It helps frame the integration problem by showing the main interacting neighbors—Avionics, Cabin Environment, Structure/Pressure Vessel, ECLSS, Power System, and Crew—before diving into detailed exchanges and functions.
 ![CSA - ]({{ site.baseurl }}/assets/images/%5BOAB%5D%20Operational%20Entities.png)
 
----
-
-### SAB (System Architecture Diagram)
+### 3b. SAB (System Architecture Diagram)
 The **SAB** defines PCPS as the system of interest and makes interfaces explicit.
 
 **Inputs:**
@@ -76,9 +84,7 @@ The **SAB** defines PCPS as the system of interest and makes interfaces explicit
 
 ![SAB - ]({{ site.baseurl }}/assets/images/%5BSAB%5D%20Structure.png)
 
----
-
-### Functional Dataflow — How pressure is controlled
+### 3c. Functional Dataflow — How pressure is controlled
 The functional architecture models a closed‑loop control system:
 
 1. **Acquire Cabin & Ambient Pressure**
@@ -92,7 +98,7 @@ The functional architecture models a closed‑loop control system:
 
 Emergency behavior is explicit: **detect leak/over‑pressure → emergency protection (isolate/safe/vent/alarms) → emergency event packet** for telemetry.
 
-### Functional Chains (end‑to‑end coverage)
+### 3d. Functional Chains (end‑to‑end coverage)
 Key functional chains were highlighted to validate scenario coverage and interface completeness:
 
 - **Nominal Pressure Regulation:** sense → validate → compute error → mode logic → command valves → regulate airflow → stabilize cabin pressure  
@@ -104,7 +110,8 @@ Key functional chains were highlighted to validate scenario coverage and interfa
 
 ---
 
-## Logical Architecture
+## 4. Logical Architecture
+### 4a. LAB (Logical Architecture Diagram)
 Functions were allocated into a logical decomposition that separates sensing, control, and actuation:
 - **Pressure Sensor Unit:** cabin/ambient acquisition + filtering/validation  
 - **Control Logic Unit:** setpoint tracking, error computation, mode management, command generation  
@@ -113,12 +120,20 @@ Functions were allocated into a logical decomposition that separates sensing, co
 
 This structure supports traceability from functions to logical components and provides a clean foundation for later physical allocation (HW/SW, redundancy, etc.).
 
-### LAB (Logical Architecture Diagram)
 ![LAB - ]({{ site.baseurl }}/assets/images/%5BLAB%5D%20Structure.png)
+
+### 4b. LCBD (Logical Component Breakdown Diagram)
+The LCBD decomposes the Logical System into major logical building blocks:
+- Pressure Sensor Unit
+- Control Logic Unit
+- Valve Actuation Unit
+- Power Conditioning Unit
+
+![LCBD - ]({{ site.baseurl }}/assets/images/%5BLAB%5D%20Structure.png)
 
 ---
 
-## What this project demonstrates
+## 5. What this project demonstrates
 - Correct **Arcadia/Capella layering** from operational context to logical design  
 - Explicit **system boundary and interfaces** (crew/avionics/ECLSS/power/structure/ground)  
 - Closed‑loop pressure control with **mode logic** and **emergency protection**  
