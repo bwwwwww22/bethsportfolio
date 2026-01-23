@@ -80,7 +80,7 @@ This view captures **behavioral collaboration** between stakeholders and systems
 ---
 
 ### 2c. OCB — Operational Capability Diagram
-![OCB]({{ site.baseurl }}/assets/images/%5BOCB%5D%20Operational%20Safe%20Capabilities.png)
+![OCB]({{ site.baseurl }}/assets/images/%5BOCB%5D%20Operational%20Capabilities.png)
 
 **What it shows:**  
 The set of **operational capabilities** required to achieve the mission goal, such as:
@@ -94,7 +94,7 @@ This diagram links **stakeholder needs to operational behavior** and provides ju
 ---
 
 ### 2d. OEBD — Operational Entity Breakdown Diagram
-![OEBD]({{ site.baseurl }}/assets/images/%5BOEBD%5D%20Operational%20Safe%20Entities.png)
+![OEBD]({{ site.baseurl }}/assets/images/%5BOEBD%5D%20Operational%20Entities.png)
 
 **What it shows:**  
 A structured **decomposition of operational entities** into their major elements (e.g., spacecraft subsystems and human operators).
