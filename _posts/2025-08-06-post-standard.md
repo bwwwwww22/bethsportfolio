@@ -69,7 +69,7 @@ This diagram defines **system scope and ownership**. It answers:
 ---
 
 ### 2b. OAIB — Operational Activity Interaction Diagram
-![OAIB]({{ site.baseurl }}/assets/images/%5BOES%5D%20Root%20Operational%20Activity.png)
+![OAIB]({{ site.baseurl }}/assets/images/%5BOAIB%5D%20Root%20Operational%20Activity.png)
 
 **What it shows:**  
 The **operational activities** performed by entities (e.g., monitoring, commanding, supplying air, reporting leaks) and the **interactions between those activities**.
