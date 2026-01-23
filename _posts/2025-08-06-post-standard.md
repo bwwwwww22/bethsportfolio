@@ -35,9 +35,9 @@ Demonstrate structured progression through the Arcadia layers:
 - Detect abnormal conditions (leak, over-pressure, sensor/power faults)
 - Regulate pressure using inflow valves and vent path
 - Support **Auto / Manual / Emergency** modes
-- Exchange commands and telemetry with Avionics and Ground Support
+- Exchange commands and telemetry with avionics and Ground Support
 - Request make-up air from ECLSS
-- Interface with Power and Structure for health and integrity reporting
+- Interface with power and structure for health and integrity reporting
 
 ---
 
@@ -72,10 +72,10 @@ This diagram defines **system scope and ownership**. It answers:
 ![OAIB]({{ site.baseurl }}/assets/images/%5BOAIB%5D%20Root%20Operational%20Activity.png)
 
 **What it shows:**  
-The **operational activities** performed by entities (e.g., monitoring, commanding, supplying air, reporting leaks) and the **interactions between those activities**.
+The **operational activities** performed by entities and the **interactions** between those activities.
 
 **Why it exists:**  
-This view captures **behavioral collaboration** between stakeholders and systems before any system design is assumed. It is the basis for deriving system functions.
+This view captures **behavioral collaboration** between stakeholders and systems before any system design is assumed.
 
 ---
 
@@ -97,7 +97,7 @@ This diagram links **stakeholder needs to operational behavior** and provides ju
 ![OEBD]({{ site.baseurl }}/assets/images/%5BOEBD%5D%20Operational%20Entities.png)
 
 **What it shows:**  
-A structured **decomposition of operational entities** into their major elements (e.g., spacecraft subsystems and human operators).
+A structured **decomposition of operational entities** into their major elements.
 
 **Why it exists:**  
 This clarifies **responsibility boundaries** and supports allocation of operational activities to the correct actors.
@@ -108,16 +108,16 @@ This clarifies **responsibility boundaries** and supports allocation of operatio
 ![OES]({{ site.baseurl }}/assets/images/%5BOES%5D%20Maintain%20Safe%20Cabin%20Pressure.png)
 
 **What it shows:**  
-A **time-ordered scenario** for maintaining safe cabin pressure, including sensing, commanding, air supply, and response to disturbances.
+A **time-ordered scenario** for maintaining safe cabin pressure.
 
 **Why it exists:**  
-This validates that the defined entities and activities can collectively achieve the mission under realistic conditions.
+This validates that the defined entities and activities can collectively achieve the mission.
 
 ---
 
 ## 3. System Analysis (SA)
 
-This layer defines the **system of interest (PCPS)**, its **functions**, and its **formal interfaces** with external actors.
+This layer defines the **system of interest (PCPS)**, its **functions**, and its **interfaces** with external actors.
 
 ---
 
@@ -125,7 +125,7 @@ This layer defines the **system of interest (PCPS)**, its **functions**, and its
 ![CSA]({{ site.baseurl }}/assets/images/%5BCSA%5D%20System.png)
 
 **What it shows:**  
-The **PCPS system boundary** and the external **actors** that interact with it (Crew, Avionics, ECLSS, Power, Structure, Ground, Environment).
+The **PCPS system boundary** and the external **actors** that interact with it.
 
 **Why it exists:**  
 This is the **integration framing diagram**. It establishes:
@@ -146,11 +146,11 @@ The **allocation of system functions** to either:
 Functions are connected by **functional exchanges** representing formal data, command, or physical flows.
 
 **Why it exists:**  
-This diagram transforms operational behavior into **engineering requirements**. Every arrow implies an interface that must be implemented, tested, and verified.
+This diagram transforms operational behavior into engineering requirements. Every arrow implies an interface that must be implemented, tested, and verified.
 
 ---
 
-### 3c. System Functional Behavior — Closed-Loop Control
+### 3c. System Functional Behavior
 The PCPS is modeled as a **closed-loop pressure control system**:
 
 1. **Acquire Cabin & Ambient Pressure**  
@@ -174,7 +174,7 @@ Detect leak or over-pressure → Execute emergency protection (isolate, safe ven
 The **data and control flows** between system functions, including sensor signals, control logic, command generation, actuation, and telemetry feedback.
 
 **Why it exists:**  
-This validates **functional completeness and correctness**. It ensures no function is disconnected and that every control path has a clear source and sink.
+This ensures no function is disconnected and that every control path has a clear source and sink.
 
 ---
 
@@ -190,13 +190,13 @@ Detect Over-Pressure → Emergency Protection → Vent Path Actuation → Teleme
 Disturbance Input → Detection → Isolation / Load Relief → Reporting
 
 **Why these exist:**  
-Functional chains prove that the system architecture supports **real mission scenarios**, not just isolated functions.
+Functional chains prove that the system architecture supports various mission scenarios, not just isolated functions.
 
 ---
 
 ## 4. Logical Architecture (LA)
 
-This layer introduces **logical components** and allocates the **existing system functions** to them. No new behavior is created here—only **structural realization of functions**.
+This layer introduces **logical components** and allocates the **existing system functions** to them. A **structural realization** of functions is shown.
 
 ---
 
@@ -226,7 +226,7 @@ A decomposition of the PCPS into major **logical components** with system functi
   - Report Power Health  
 
 **Why it exists:**  
-This diagram bridges **functional behavior and physical design**. It defines where functions “live” logically before hardware/software decisions are made.
+This diagram bridges **functional behavior** and **physical design**. It defines where functions “live” logically before hardware/software decisions are made.
 
 ---
 
@@ -234,10 +234,10 @@ This diagram bridges **functional behavior and physical design**. It defines whe
 ![LCBD]({{ site.baseurl }}/assets/images/%5BLCBD%5D%20Structure.png)
 
 **What it shows:**  
-A hierarchical **breakdown of logical components** forming the PCPS.
+A hierarchical breakdown of logical components forming the PCPS.
 
 **Why it exists:**  
-This provides a clean structure for:
+This potentially provides a structure for:
 - Future hardware/software partitioning
 - Redundancy modeling
 - Physical architecture and interface design
@@ -246,10 +246,9 @@ This provides a clean structure for:
 
 ## 5. What This Project Demonstrates
 
-- Correct application of **Arcadia layering**
-- Clear **system boundary and interface definition**
+- System boundary and interface definition
 - Closed-loop control modeling with **mode logic and emergency behavior**
 - Traceability from **operational need → system function → logical component**
-- Use of **functional chains and scenarios** to validate architecture completeness
+- Use of **functional chains** and **scenarios** to validate architecture completeness
 
 ---
